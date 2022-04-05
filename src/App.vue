@@ -1,30 +1,35 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Catalog</router-link> |
+    <router-link to="/cart">Cart</router-link>
+<!--    {{ $store.state.goods  }}-->
   </div>
+  <my-header :basket_goods="$store.state.goods"></my-header>
   <router-view/>
 </template>
 
+<script>
+import MyHeader from '@/components/MyHeader.vue';
+export default {
+  components: {
+    MyHeader
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
+body{
+  margin: 0;
+  background: #FFFFFF;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.red{
+  color:#9b2020;
 }
 </style>
