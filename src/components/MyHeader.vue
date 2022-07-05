@@ -5,13 +5,12 @@
     <div class="band">
       Clothes Market
     </div>
-    {{ $store.state.vuexWork }}<br>
-    {{ $store.state.goodsInCartStore }}
-    <!--    {{ $store.getters.readLocalStorage }}-->
+    getters - {{ $store.getters.goodsInCartStore }}
 
     <button class="basket" @click="">
       <img alt="basket" src="/assets/images/my/basket.png">
-      <h3 style="font-size:150%;margin-top: -50px;margin-right: -33px;">{{ basket_goods }}</h3>
+      <h3 style="font-size:150%;margin-top: -50px;">{{ basket_goods }}</h3>
+<!--      margin-right: -33px;-->
     </button>
   </header>
 </template>

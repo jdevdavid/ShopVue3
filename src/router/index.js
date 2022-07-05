@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Catalog from '../views/Catalog.vue'
+import Cart from '../views/Cart.vue'
 
 const routes = [
   {
@@ -10,7 +11,8 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import( '../views/Cart.vue')
+    component: Cart
+    // component: () => import( '../views/Cart.vue')
   }
 ]
 

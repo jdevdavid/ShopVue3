@@ -10,7 +10,9 @@
         <p>{{ card.brandTitle }}</p>
         <p>{{ formatCurrency(card.regular_price.currency) }} {{ card.regular_price.value }}</p>
       </div>
-      <my-button @click="buy(card.id)">Add to cart</my-button>
+      <my-button
+          @click="buy(card.id, card.title, card.brandTitle, card.image, card.regular_price.value)"
+      >Add to cart</my-button>
     </div>
   </div>
 </template>
@@ -35,11 +37,16 @@ export default {
     }
   },
   methods: {
-    buy(id){
+    buy(id, title, brandTitle, image, regular_price){
       this.basket_goods++;
-      // console.log(id + ' ' + this.basket_goods);
+      // console.log("regular_price" + ' -  ' + regular_price);
       this.$emit('buy_item', {
         id: id,
+        title: title,
+        brandTitle: brandTitle,
+        image: image,
+        price: regular_price,
+        amount: 1,
         basket_goods: this.basket_goods
       });
     },

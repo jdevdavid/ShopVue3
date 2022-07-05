@@ -2,14 +2,16 @@ import {createStore} from "vuex";
 
 export default createStore({
   state: () => ({
-    vuexWork: "Vuex - Work",
+    // goodsInCartStore: [],
+    goodsInCartStore: JSON.parse(localStorage.getItem("goodsInCart")),
     goods: 0,
-    goodsInCartStore: []
-    // goodsInCartStore: readLocalStorage
   }),
   getters: {
-    doubleLikes(state) {
-      return state.likes * 2
+    goodsInCartStore(state){
+      return state.goodsInCartStore;
+    },
+    goodsLength(state){
+      return state.goodsInCartStore.length;
     },
     // readLocalStorage(state, commit) {
     //   // this.goodsInCartStore = localStorage.getItem("goodsInCart");
@@ -26,12 +28,6 @@ export default createStore({
       // JSON.stringify(CartStore)
       // state.goodsInCartStore = JSON.stringify(goodsInCartStore);
       state.goodsInCartStore = goodsInCartStore;
-    },
-    incrementLikes(state) {
-      state.likes += 1
-    },
-    decrementLikes(state) {
-      state.likes -= 1
     },
     incrementGoods(state) {
       state.goods += 1

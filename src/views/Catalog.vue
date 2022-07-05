@@ -7,7 +7,7 @@
 
       <div v-for="card in brands" :key="card.id">
 
-        <my-button @click="filterBrand(card.id)">
+        <my-button style="margin-top: 15px;" @click="filterBrand(card.id)">
           {{ card.title }}
         </my-button>
 
@@ -17,8 +17,13 @@
     <div class="catalog">
       <h2>Сatalog</h2>
 
-      <div class="cards-container" v-if="productsFilter.length > 0">
-        <my-cards :cards="productsFilter" @buy_item="onBuy"/>
+      <div
+          class="cards-container"
+          v-if="productsFilter.length > 0">
+        <my-cards
+            :cards="productsFilter"
+            @buy_item="onBuy"
+        />
       </div>
 
       <h2 v-else class="red">Список товаров пуст. Возможно данные с сервера не были загружены.</h2>
@@ -50,19 +55,23 @@ export default {
       // basket_goods: 0
     }
   },
+  computed: {
+    getGoods(){
+      return this.$store.getters.goodsInCartStore;
+    }
+  },
   methods: {
     // Добавления товара в корзину ???
     onBuy (data) {
-      console.log('child component said basket', data)
-      this.$store.commit('incrementGoods');
-
+      // console.log('child component said basket', data)
       let CartStore = this.$store.state.goodsInCartStore;
-      console.log('CartStore - ', CartStore)
+
+      // console.log('CartStore - ', CartStore);
       CartStore.push(data);
+      // console.log('CartStore2 - ', CartStore);
 
+      this.$store.commit('incrementGoods');
       this.$store.commit('setGoodsInCartStore', CartStore);
-
-      // console.log("this.goodsInCart - " + JSON.stringify(CartStore));
       localStorage.setItem('goodsInCart', JSON.stringify(CartStore));
     },
     // Фильтрация по брендам
@@ -132,7 +141,8 @@ export default {
     // this.goodsInCart = localStorage.getItem("goodsInCart")
     // console.log(this.goodsInCart);
     // this.$store.getters.readLocalStorage;
-    this.readLocalStorage();
+
+    // this.readLocalStorage();
   }
 }
 </script>
