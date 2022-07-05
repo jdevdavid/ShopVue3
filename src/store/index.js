@@ -4,9 +4,12 @@ export default createStore({
   state: () => ({
     // goodsInCartStore: [],
     goodsInCartStore: JSON.parse(localStorage.getItem("goodsInCart")),
-    goods: 0,
+    goods: JSON.parse(localStorage.getItem("goods")),
   }),
   getters: {
+    goods(state){
+      return state.goods;
+    },
     goodsInCartStore(state){
       return state.goodsInCartStore;
     },

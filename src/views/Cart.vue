@@ -8,11 +8,11 @@
 
       <div class="shoppingCart">
         <div class="head-cart">
-          <h4 style="flex-grow: 3;">Item</h4>
+          <h4 style="flex-grow: 2.5;">Item</h4>
           <h4 style="flex-grow: 1;">Price</h4>
           <h4 style="flex-grow: 1;">Qty</h4>
           <h4 style="flex-grow: 1;">Total</h4>
-          <h4 style="flex-grow: 0;"></h4>
+          <h4 style="flex-grow: 0.3;"></h4>
         </div>
 
         <div v-for="good in getGoods"
@@ -21,7 +21,7 @@
         >
 <!--          <div class="item-cart">-->
             <div class="item"
-                 style="flex-grow: 2;">
+                 style="flex-grow: 1.8;">
               <img
                   width="80"
                   height="80"
@@ -40,18 +40,19 @@
                   type="number"
                   style="width: 40px; height: 30px; margin: 0 10px;"
                   :value="good.amount"
-                  @change="this.someChangeInput"
+                  @change="this.someChangeInput(good.id, good.amount)"
               >
               <!--                  v-model.number="qty"-->
 <!--              :value="good.amount"  qty[good.id]  -->
             </div>
-            <label style="flex-grow: 1;">
+            <label style="flex-grow: 1; display: flex;
+  justify-content: center;">
               {{ (good.price * good.amount).toFixed(2) }}
             </label>
 
             <my-button
                 @click="this.delete(good.id)"
-                style="flex-grow: 0;">
+                style="flex-grow: 0; ">
               Delete
             </my-button>
             <hr>
@@ -93,22 +94,22 @@ export default {
       let CartStore = this.getGoods;
       let total = 0;
       for(let i = 0; i < CartStore.length ;i++){
-        console.log(i);
+        // console.log(i);
         total += CartStore[i].price * CartStore[i].amount;
       }
       return total.toFixed(2);
     }
   },
   methods: {
-    someChangeInput(){
+    someChangeInput(id, amount){
+      // console.log('someChangeInput event - ', event);
+      console.log('someChangeInput id - ', id);
+      console.log('someChangeInput amount - ', amount);
 
     },
     delete(id){
-      console.log('id - ', id);
       let CartStore = this.getGoods;
-      console.log('CartStore - ', CartStore);
-      CartStore.splice(0, id);
-      console.log('CartStore2 - ', CartStore);
+      CartStore = CartStore.filter(c => c.id !== id);
 
       this.$store.commit('decrementGoods');
       this.$store.commit('setGoodsInCartStore', CartStore);

@@ -63,11 +63,26 @@ export default {
   methods: {
     // Добавления товара в корзину ???
     onBuy (data) {
-      // console.log('child component said basket', data)
+      console.log('child component said basket', data)
+      // console.log('child component said basket', data.id)
       let CartStore = this.$store.state.goodsInCartStore;
 
       // console.log('CartStore - ', CartStore);
-      CartStore.push(data);
+      // console.log('CartStore - ', CartStore[0].id);
+
+  //Проверяем надо ли создавать новую запись или добавляем в старую
+        let AmountPlus = false;
+        for (let i=0; i < CartStore.length; i++){
+
+          if (data.id === CartStore[i].id){
+            CartStore[i].amount++;
+            i = CartStore.length;
+            AmountPlus = true;
+          }
+        }
+      //Если НеПрибавляем, значит добавляем.
+      !AmountPlus ? CartStore.push(data) : true;
+
       // console.log('CartStore2 - ', CartStore);
 
       this.$store.commit('incrementGoods');
