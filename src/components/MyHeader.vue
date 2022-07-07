@@ -19,7 +19,7 @@
 export default {
   name: "MyHeader",
   props: {
-    basket_goods:[Number]
+    basket_goods: [Number]
   },
   data() {
     return {

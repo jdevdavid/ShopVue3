@@ -5,6 +5,7 @@
 <!--  [x] не сохраняются данные в localstorage    -->
 <!--  [х] При удалении элемента из корзины удаляются все товары или некоторые -->
 <!--  [х] При покупке Два одинаковых товара должны схлопываться в корзине в одну позицию -->
+<!--  [x]  Число позиций в корзине должно всегда показываться в углу   -->
 
 <!--  [ ] Возможно что то не так в Promise.all -->
 <!--  [ ] иногда при переходах зависает приложение    -->
@@ -19,9 +20,8 @@
   <div id="nav">
     <router-link to="/">Catalog</router-link> |
     <router-link to="/cart">Cart</router-link>
-<!--    {{ $store.state.goods  }}-->
   </div>
-  <my-header :basket_goods="this.$store.state.goods"></my-header>
+  <my-header :basket_goods="this.getGoodsAmount"></my-header>
   <router-view/>
 </template>
 
@@ -30,7 +30,13 @@ import MyHeader from '@/components/MyHeader.vue';
 export default {
   components: {
     MyHeader
-  }
+  },
+  computed: {
+    getGoodsAmount(){
+      return this.$store.getters.goodsAmount ?
+          this.$store.getters.goodsAmount : 0;
+    }
+  },
 }
 </script>
 

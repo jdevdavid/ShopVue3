@@ -34,7 +34,6 @@
 
 <script>
 // @ is an alias to /src
-// import MyHeader from '@/components/MyHeader.vue';
 import MyButton from '@/components/UI/MyButton.vue';
 import MyCards from '@/components/MyCards.vue';
 
@@ -43,7 +42,6 @@ import axios from 'axios';
 export default {
   name: 'Catalog',
   components: {
-    // MyHeader,
     MyButton, MyCards
   },
   data() {
@@ -52,19 +50,18 @@ export default {
       products: [],
       productsFilter: [],
       goodsInCart: []
-      // basket_goods: 0
     }
   },
   computed: {
     getGoods(){
-      return this.$store.getters.goodsInCartStore;
+      return this.$store.getters.goodsInCartStore ?
+          this.$store.getters.goodsInCartStore : 0;
     }
   },
   methods: {
-    // Добавления товара в корзину ???
+    // Добавления товара в корзину
     onBuy (data) {
-      console.log('child component said basket', data)
-      // console.log('child component said basket', data.id)
+      console.log('child component said basket', data);
       let CartStore = this.$store.state.goodsInCartStore;
 
       // console.log('CartStore - ', CartStore);
@@ -74,6 +71,7 @@ export default {
         let AmountPlus = false;
         for (let i=0; i < CartStore.length; i++){
 
+          // Добавляем в старую
           if (data.id === CartStore[i].id){
             CartStore[i].amount++;
             i = CartStore.length;
@@ -81,11 +79,12 @@ export default {
           }
         }
       //Если НеПрибавляем, значит добавляем.
-      !AmountPlus ? CartStore.push(data) : true;
+      // !AmountPlus ? CartStore.push(data) : true;
+      if(!AmountPlus){
+        CartStore.push(data);
+        this.$store.commit('incrementGoods');
+      }
 
-      // console.log('CartStore2 - ', CartStore);
-
-      this.$store.commit('incrementGoods');
       this.$store.commit('setGoodsInCartStore', CartStore);
       localStorage.setItem('goodsInCart', JSON.stringify(CartStore));
     },
@@ -135,29 +134,10 @@ export default {
 
       this.fixBrands();
     },
-    readLocalStorage() {
-      // this.goodsInCartStore = localStorage.getItem("goodsInCart");
-      // return localStorage.getItem("goodsInCart")
-      const cart = localStorage.getItem("goodsInCart");
-      this.$store.commit('setGoodsInCartStore', cart);
-      console.log("cart - " + cart);
-      // return cart;
-    }
   },
-  watch(){
-    // this.$store.getters.readLocalStorage;
-  },
+  watch(){  },
   mounted() {
     this.run();
-    // if (localStorage.getItem("goodsInCart")){
-      // goodsInCart = JSON.parse(localStorage.getItem("goodsInCart"))
-      // console.log(this.goodsInCart);
-    // }
-    // this.goodsInCart = localStorage.getItem("goodsInCart")
-    // console.log(this.goodsInCart);
-    // this.$store.getters.readLocalStorage;
-
-    // this.readLocalStorage();
   }
 }
 </script>

@@ -2,41 +2,31 @@ import {createStore} from "vuex";
 
 export default createStore({
   state: () => ({
-    // goodsInCartStore: [],
     goodsInCartStore: JSON.parse(localStorage.getItem("goodsInCart")),
-    goods: JSON.parse(localStorage.getItem("goods")),
+    goodsAmount: JSON.parse(localStorage.getItem("goodsAmount")),
   }),
   getters: {
-    goods(state){
-      return state.goods;
+    goodsAmount(state){
+      return state.goodsAmount;
     },
     goodsInCartStore(state){
       return state.goodsInCartStore;
     },
-    goodsLength(state){
-      return state.goodsInCartStore.length;
-    },
-    // readLocalStorage(state, commit) {
-    //   // this.goodsInCartStore = localStorage.getItem("goodsInCart");
-    //   // return localStorage.getItem("goodsInCart")
-    //   const cart = localStorage.getItem("goodsInCart");
-    //   commit('setGoodsInCartStore', cart);
-    //   // mutations.setGoodsInCartStore(cart);
-    //   console.log("cart - " + cart);
-    //   return cart;
-    // }
+    // goodsLength(state){
+    //   return state.goodsInCartStore.length;
+    // },
   },
   mutations: {
     setGoodsInCartStore(state, goodsInCartStore) {
-      // JSON.stringify(CartStore)
-      // state.goodsInCartStore = JSON.stringify(goodsInCartStore);
       state.goodsInCartStore = goodsInCartStore;
     },
     incrementGoods(state) {
-      state.goods += 1
+      state.goodsAmount += 1;
+      localStorage.setItem('goodsAmount', JSON.stringify(state.goodsAmount));
     },
     decrementGoods(state) {
-      state.goods -= 1
+      state.goodsAmount -= 1;
+      localStorage.setItem('goodsAmount', JSON.stringify(state.goodsAmount));
     }
   },
   actions: {

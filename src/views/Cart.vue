@@ -38,8 +38,14 @@
             <div style="display:flex; justify-content: center;">
               <input
                   type="number"
-                  style="width: 40px; height: 30px; margin: 0 10px;"
+                  min="1"
                   :value="good.amount"
+                  @change="this.someChangeInput(good.id, good.amount)"
+              >
+              <input
+                  type="number"
+                  min="1"
+                  v-model="this.qty[good.id]"
                   @change="this.someChangeInput(good.id, good.amount)"
               >
               <!--                  v-model.number="qty"-->
@@ -55,9 +61,10 @@
                 style="flex-grow: 0; ">
               Delete
             </my-button>
-            <hr>
+
 <!--          </div>-->
         </div>
+        <hr style="width: 100%;">
       </div>
 
       <div class="total-block">
@@ -69,7 +76,6 @@
 </template>
 
 <script>
-import MyHeader from "@/components/MyHeader";
 import MyButton from "@/components/UI/MyButton";
 import MyCards from "@/components/MyCards";
 import MyInput from "@/components/UI/MyInput";
@@ -81,8 +87,8 @@ export default {
   },
   data() {
     return {
-      // qty: [],
-      // subtotal: 0,
+      qty: [],
+      // qty: this.prepareQTY2(),
       // goods: this.$store.getters.goodsInCartStore
     }
   },
@@ -98,14 +104,27 @@ export default {
         total += CartStore[i].price * CartStore[i].amount;
       }
       return total.toFixed(2);
-    }
+    },
+    prepareQTY2(){
+      let CartStore = this.getGoods;
+      let Amounts = [];
+      for (let i = 0; i < CartStore.length; i++){
+        console.log('mounted i - ' + i + ' - ' + CartStore[i].amount);
+
+        this.qty[i+1] = CartStore[i].amount;
+        Amounts[i+1] = CartStore[i].amount;
+      }
+      console.log(this.qty);
+      console.log(Amounts);
+      return Amounts;
+    },
   },
   methods: {
     someChangeInput(id, amount){
       // console.log('someChangeInput event - ', event);
       console.log('someChangeInput id - ', id);
       console.log('someChangeInput amount - ', amount);
-
+      console.log('someChangeInput amount - ', this.qty[id]);
     },
     delete(id){
       let CartStore = this.getGoods;
@@ -114,15 +133,58 @@ export default {
       this.$store.commit('decrementGoods');
       this.$store.commit('setGoodsInCartStore', CartStore);
       localStorage.setItem('goodsInCart', JSON.stringify(CartStore));
-    }
+    },
+    prepareQTY(){
+      let CartStore = this.getGoods;
+      let Amounts = [];
+      for (let i = 0; i < CartStore.length; i++){
+        console.log('mounted i - ' + i + ' - ' + CartStore[i].amount);
+
+        this.qty[i+1] = CartStore[i].amount;
+        Amounts[i+1] = CartStore[i].amount;
+      }
+      console.log(this.qty);
+      return Amounts;
+    },
+  },
+  beforeCreate(){
+    console.log('beforeCreate');
+  },
+  created(){
+    console.log('created');
+    // this.prepareQTY();
+  },
+  beforeMount(){
+    console.log('beforeMount');
+  },
+  mounted() {
+    console.log('mounted');
+  },
+  beforeUpdate(){
+    console.log('beforeUpdate');
+  },
+  updated() {
+    console.log('updated');
+  },
+  beforeUnmount(){
+    console.log('beforeUnmount');
+  },
+  unmounted(){
+    console.log('unmounted');
   }
 }
 </script>
 
 <style scoped>
+input {
+  width: 40px;
+  height: 30px;
+  margin: 0 10px;
+}
 .list-item-cart{
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #fff;
 }
 .list-item-cart > * {
   /*display: flex;*/
@@ -132,6 +194,7 @@ export default {
 .item {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #fff;
 }
 .item-cart{
   /*height: 5em;*/
@@ -152,10 +215,8 @@ export default {
 
   display: flex;
   flex-direction: column;
-  /*justify-content: space-between;*/
 }
 .cart-page {
-  /*display: flex;*/
   margin: 0 10%;
 }
 
