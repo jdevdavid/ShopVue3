@@ -1,9 +1,7 @@
 <template>
   <div class="cart-page">
     <div class="about"></div>
-<!--    <my-header/>-->
     <div class="main-cart">
-<!--      <h2>Shopping Cart {{ $store.state.goods  }}</h2>-->
       <h2>Shopping Cart {{ getGoods.length  }} items </h2>
 
       <div class="shoppingCart">

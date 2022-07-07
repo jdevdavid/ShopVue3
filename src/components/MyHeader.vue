@@ -1,16 +1,14 @@
 <template>
   <header class="header">
 <!--    <img alt="logo" src="assets/images/logo.png">-->
-
     <div class="band">
       Clothes Market
     </div>
-    getters - {{ $store.getters.goodsInCartStore }}
+<!--    getters - {{ $store.getters.goodsInCartStore }}-->
 
     <button class="basket" @click="">
-      <img alt="basket" src="/assets/images/my/basket.png">
-      <h3 style="font-size:150%;margin-top: -50px;">{{ basket_goods }}</h3>
-<!--      margin-right: -33px;-->
+      <img alt="basket" src="/assets/images/my/bas.png">
+      <h3 style="font-size:150%; margin-top: -43px;">{{ basket_goods }}</h3>
     </button>
   </header>
 </template>
